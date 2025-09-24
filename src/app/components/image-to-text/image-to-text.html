@@ -1,0 +1,52 @@
+<section class="container">
+  <header class="header">
+    <h1>Image to Text Converter</h1>
+    <p>Load JPEG/PNG up to 2 MB</p>
+  </header>
+
+  <div class="uploader">
+    <label class="file-label">
+      <input
+        type="file"
+        accept="image/png,image/jpeg"
+        (change)="onFileSelected($event)"
+      />
+      <span>Select a file</span>
+    </label>
+
+    @if (file()) {
+      <div class="file-meta">
+        <span class="name">{{ fileName() }}</span>
+        <span class="size">{{ fileSizeKb() }} KB</span>
+        <button class="btn btn-secondary" (click)="clear()">Clear</button>
+      </div>
+    }
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-error">{{ error() }}</div>
+  }
+
+  @if (previewUrl()) {
+    <div class="preview">
+      <img [src]="previewUrl()!" alt="preview" />
+    </div>
+  }
+
+  <div class="actions">
+    <button class="btn btn-primary" (click)="extractText()" [disabled]="!file() || loading()">
+      @if (loading()) { <span class="spinner"></span> Loading... } @else { Get text }
+    </button>
+
+    <button class="btn btn-outline" (click)="copyText()" [disabled]="!extractedText()">
+      Copy text
+    </button>
+  </div>
+
+  @if (extractedText()) {
+    <section class="result">
+      <h2>Result</h2>
+      <pre class="text-output">{{ extractedText() }}</pre>
+    </section>
+  }
+</section>

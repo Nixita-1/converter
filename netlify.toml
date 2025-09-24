@@ -1,0 +1,10 @@
+[build]
+  command = "ng build --configuration production"
+  publish = "dist/frontend-test/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
+  conditions = { Language = "text/html" }
